@@ -42,7 +42,7 @@ pipeline {
         stage('Deploy application') {
             steps {
                 sh """
-                    ret=\$(cmp --silent /artifacts/tmp/coffee.zip /artifacts/coffee.zip)
+                    ret=`cmp --silent /artifacts/tmp/coffee.zip /artifacts/coffee.zip`
                     if [ ! -f /artifacts/coffee.zip ] || [ \$ret -ne 0 ]; then
                         cp /artifacts/tmp/coffee.zip /artifacts/coffee.zip
                         mkdir -p /tmp/upload_s3
