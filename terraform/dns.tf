@@ -1,12 +1,12 @@
 data "aws_route53_zone" "primary" {
-    name                = "${var.main_domain}"
+    name                = "gamesmith.co.uk"
     private_zone        = false
 }
 
 // IPv4
 resource "aws_route53_record" "ipv4" {
     zone_id         = "${data.aws_route53_zone.primary.zone_id}"
-    name            = "${var.subdomain}.${var.domain}"
+    name            = "coffee.gamesmith.co.uk"
     type            = "A"
     alias {
         name        = "${aws_cloudfront_distribution.frontend_cf.domain_name}"
@@ -18,7 +18,7 @@ resource "aws_route53_record" "ipv4" {
 // IPv6
 resource "aws_route53_record" "ipv6" {
     zone_id         = "${data.aws_route53_zone.primary.zone_id}"
-    name            = "${var.subdomain}.${var.domain}"
+    name            = "coffee.gamesmith.co.uk"
     type            = "AAAA"
     alias {
         name        = "${aws_cloudfront_distribution.frontend_cf.domain_name}"
