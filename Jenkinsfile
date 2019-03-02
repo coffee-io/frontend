@@ -39,11 +39,12 @@ pipeline {
                     """, returnStatus: true
                     if (ret == 33) {
                         currentBuild.result = 'SUCCESS'
-                        error('SUCCESS')
                     }
                 }
             }
         }
+        if (ret == 33)
+            return
 
         stage('Build container') {
             steps {
