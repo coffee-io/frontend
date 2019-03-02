@@ -31,8 +31,8 @@ pipeline {
                     script {
                         sh """
                             cd terraform
-                            terraform init -backend-config='access_key=$USER' -backend-config='secret_key=$PASS'
-                            terraform apply -no-color -input=false -lock=false -var 'access_key=$USER' -var 'secret_key=$PASS'
+                            terraform init -input=false -backend-config='access_key=$USER' -backend-config='secret_key=$PASS'
+                            terraform apply -no-color -input=false -auto-approve -lock=false -var 'access_key=$USER' -var 'secret_key=$PASS'
                         """
                     }
                 }
