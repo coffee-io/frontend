@@ -30,6 +30,7 @@ pipeline {
                 sh """
                     has_changed=\$(source_has_changed frontend src/ | head -c 1)
                     if [ "\$has_changed" = "n" ]; then
+                        echo Source files have not changed, exiting.
                         exit 0
                     fi
                 """
@@ -62,8 +63,8 @@ pipeline {
 
         stage('Deploy application') {
             steps {
-                /*
                 sh """
+                /*
                     set +e; cmp --silent /artifacts/tmp/coffee.zip /artifacts/coffee.zip ; ret=\$? ; set -e
                     if [ ! -f /artifacts/coffee.zip ] || [ \$ret -ne 0 ]; then
                         cp /artifacts/tmp/coffee.zip /artifacts/coffee.zip
@@ -75,8 +76,8 @@ pipeline {
                     else
                         echo Not deployed, same code as previous deploy.
                     fi
-                """
                 */
+                """
             }
         }
     }
