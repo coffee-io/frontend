@@ -18,7 +18,7 @@ pipeline {
         stage('Download utilities') {
             steps {
                 sh """
-                    aws s3 cp s3://coffee_artifacts/source_has_changed /usr/local/bin
+                    aws s3 cp s3://coffee-artifacts/source_has_changed /usr/local/bin
                     aws s3 cp s3://coffee_artifacts/update_source_cksum /usr/local/bin
                 """
             }
