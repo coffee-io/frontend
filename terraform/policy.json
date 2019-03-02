@@ -8,7 +8,7 @@
         "s3:GetObject"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws:s3:::${bucket}/*",
+      "Resource": "arn:aws:s3:::coffee-prod/*",
       "Principal": "*"
     }
   ]

@@ -11,6 +11,7 @@ pipeline {
 
     stages {
 
+        /*
         stage('Build container') {
             steps {
                 sh 'docker build -t frontend .'
@@ -22,6 +23,7 @@ pipeline {
                 sh 'docker run -v /artifacts/tmp:/tmp/artifacts frontend'
             }
         }
+        */
 
         stage('Deploy infrastructure') {
             steps {
