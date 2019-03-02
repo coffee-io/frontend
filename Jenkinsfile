@@ -19,7 +19,7 @@ pipeline {
 
         stage('Build application') {
             steps {
-                sh 'docker run -v /artifacts:/tmp frontend'
+                sh 'docker run -v /artifacts/tmp:/tmp/artifacts frontend'
             }
         }
 

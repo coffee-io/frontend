@@ -6,8 +6,9 @@ RUN apk add zip
 WORKDIR /home/node
 COPY coffee/ .
 
-CMD yarn \
+CMD mkdir /tmp/artifacts \
+	&& yarn \
 	&& yarn test \
 	&& yarn build \
 	&& cd build \
-	&& zip /tmp/coffee.zip *
+	&& zip -r /tmp/artifacts/coffee.zip *
