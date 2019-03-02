@@ -20,7 +20,9 @@ pipeline {
                 sh """
                     set +e; mkdir -p /tmp/bin; set -e
                     aws s3 cp s3://coffee-artifacts/source_has_changed /tmp/bin/
+                    chmod +x /tmp/bin/source_has_changed
                     aws s3 cp s3://coffee-artifacts/update_source_cksum /tmp/bin/
+                    chmod +x /tmp/bin/update_source_cksum
                 """
             }
         }
