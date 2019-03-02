@@ -25,6 +25,17 @@ pipeline {
             }
         }
 
+        stage('Check if sources have changed') {
+            steps {
+                sh """
+                    has_changed=\$(source_has_changed frontend src/ | head -c 1)
+                    if [ "\$has_changed" = "n" ]; then
+                        exit 0
+                    fi
+                """
+            }
+        }
+
         /*
         stage('Build container') {
             steps {
@@ -51,7 +62,6 @@ pipeline {
 
         stage('Deploy application') {
             steps {
-                sh ''
                 /*
                 sh """
                     set +e; cmp --silent /artifacts/tmp/coffee.zip /artifacts/coffee.zip ; ret=\$? ; set -e
