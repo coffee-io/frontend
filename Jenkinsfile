@@ -30,17 +30,13 @@ pipeline {
         stage('Check if sources have changed') {
             steps {
                 script {
-                    def ret = sh script:"""
+                    sh """
                         has_changed=\$(/tmp/bin/source_has_changed frontend coffee/src/ | head -c 1)
                         if [ "\$has_changed" = "n" ]; then
                             echo Source files have not changed, exiting.
-                            exit 33
+                            echo TODO not really...
                         fi
-                    """, returnStatus: true
-                    if (ret == 33) {
-                        currentBuild.result = 'SUCCESS'
-                        System.exit(0)
-                    }
+                    """
                 }
             }
         }
