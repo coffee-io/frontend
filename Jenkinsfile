@@ -27,31 +27,18 @@ pipeline {
             }
         }
 
-        def cancelled = false
-        try {
-            stage('Check if sources have changed') {
-                steps {
-                    script {
-                        def ret = sh script:"""
-                            has_changed=\$(/tmp/bin/source_has_changed frontend coffee/src/ | head -c 1)
-                            if [ "\$has_changed" = "n" ]; then
-                                echo Source files have not changed, exiting.
-                                exit 33
-                            fi
-                        """, returnStatus: true
-                        if (ret == 33) {
-                            cancelled = true
-                            error('Success')
-                        }
-                    }
-                }
+        stage('Check if sources have changed') {
+            script {
+                def ret = sh script:"""
+                    has_changed=\$(/tmp/bin/source_has_changed frontend coffee/src/ | head -c 1)
+                    if [ "\$has_changed" = "n" ]; then
+                        echo Source files have not changed, exiting.
+                        exit 33
+                    fi
+                """, returnStatus: true
+                if (ret == 33)
+                    return 0
             }
-        } catch (e) {
-            if (cancelled) {
-                currentBuild.result = 'SUCCESS'
-                return
-            }
-            throw e
         }
 
         stage('Build container') {
