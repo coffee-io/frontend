@@ -59,7 +59,7 @@ pipeline {
             steps {
                 sh """
                     cd terraform
-                    terraform refresh
+                    terraform destroy
                     terraform init -input=false 
                     terraform apply -no-color -input=false -auto-approve -lock=false
                 """
