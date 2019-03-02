@@ -24,11 +24,13 @@ pipeline {
             }
         }
 
+        /*
         stage('Deploy infrastructure') {
         }
 
         stage('Deploy application') {
         }
+        */
 
     }
 
