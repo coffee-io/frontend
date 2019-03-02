@@ -18,9 +18,9 @@ pipeline {
         stage('Download utilities') {
             steps {
                 sh """
-                    set +e; mkdir -p bin; set -e
-                    aws s3 cp s3://coffee-artifacts/source_has_changed bin/
-                    aws s3 cp s3://coffee-artifacts/update_source_cksum bin/
+                    set +e; mkdir -p /tmp/bin; set -e
+                    aws s3 cp s3://coffee-artifacts/source_has_changed /tmp/bin/
+                    aws s3 cp s3://coffee-artifacts/update_source_cksum /tmp/bin/
                 """
             }
         }
@@ -28,7 +28,7 @@ pipeline {
         stage('Check if sources have changed') {
             steps {
                 sh """
-                    has_changed=\$(bin/source_has_changed frontend src/ | head -c 1)
+                    has_changed=\$(/tmp/bin/source_has_changed frontend src/ | head -c 1)
                     if [ "\$has_changed" = "n" ]; then
                         echo Source files have not changed, exiting.
                         exit 0
