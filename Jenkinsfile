@@ -7,6 +7,7 @@ pipeline {
     environment {
         CI                    = true
         HOME                  = '.'
+        PATH                  = "${env.PATH}:~/bin"
         AWS_ID                = credentials("aws")
         AWS_ACCESS_KEY_ID     = "${env.AWS_ID_USR}"
         AWS_SECRET_ACCESS_KEY = "${env.AWS_ID_PSW}"
@@ -18,8 +19,8 @@ pipeline {
         stage('Download utilities') {
             steps {
                 sh """
-                    sudo aws s3 cp s3://coffee-artifacts/source_has_changed /usr/local/bin
-                    sudo aws s3 cp s3://coffee_artifacts/update_source_cksum /usr/local/bin
+                    aws s3 cp s3://coffee-artifacts/source_has_changed ~/bin
+                    aws s3 cp s3://coffee_artifacts/update_source_cksum ~/bin
                 """
             }
         }
