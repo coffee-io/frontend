@@ -19,7 +19,6 @@ pipeline {
 
         stage('Build application') {
             steps {
-                sh 'mkdir -p /artifacts'
                 sh 'docker run -v /artifacts:/tmp frontend'
             }
         }
