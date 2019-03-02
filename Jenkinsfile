@@ -7,7 +7,6 @@ pipeline {
     environment {
         CI                    = true
         HOME                  = '.'
-        PATH                  = "${env.PATH}:~/bin"
         AWS_ID                = credentials("aws")
         AWS_ACCESS_KEY_ID     = "${env.AWS_ID_USR}"
         AWS_SECRET_ACCESS_KEY = "${env.AWS_ID_PSW}"
@@ -19,8 +18,9 @@ pipeline {
         stage('Download utilities') {
             steps {
                 sh """
-                    aws s3 cp s3://coffee-artifacts/source_has_changed ~/bin
-                    aws s3 cp s3://coffee-artifacts/update_source_cksum ~/bin
+                    mkdir -p bin
+                    aws s3 cp s3://coffee-artifacts/source_has_changed bin/
+                    aws s3 cp s3://coffee-artifacts/update_source_cksum bin/
                 """
             }
         }
@@ -28,7 +28,7 @@ pipeline {
         stage('Check if sources have changed') {
             steps {
                 sh """
-                    has_changed=\$(source_has_changed frontend src/ | head -c 1)
+                    has_changed=\$(bin/source_has_changed frontend src/ | head -c 1)
                     if [ "\$has_changed" = "n" ]; then
                         echo Source files have not changed, exiting.
                         exit 0
