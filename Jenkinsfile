@@ -13,9 +13,9 @@ pipeline {
         AWS_REGION            = "us-east-1"
     }
 
-/*
     stages {
 
+/*
         stage('Download utilities') {
             steps {
                 sh """
