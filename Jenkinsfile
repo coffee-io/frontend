@@ -29,14 +29,16 @@ pipeline {
 
         stage('Check if sources have changed') {
             steps {
-                if (sh("""
-                    has_changed=\$(/tmp/bin/source_has_changed frontend coffee/src/ | head -c 1)
-                    if [ "\$has_changed" = "n" ]; then
-                        echo Source files have not changed, exiting.
-                        exit 33
-                    fi
-                """, returnStatus: true).getStatus == 33)
-                    return 0
+                step {
+                    if (sh("""
+                        has_changed=\$(/tmp/bin/source_has_changed frontend coffee/src/ | head -c 1)
+                        if [ "\$has_changed" = "n" ]; then
+                            echo Source files have not changed, exiting.
+                            exit 33
+                        fi
+                    """, returnStatus: true).getStatus == 33)
+                        return 0
+                }
             }
         }
 
