@@ -25,7 +25,7 @@ pipeline {
 
         stage('Deploy infrastructure') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'ci', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'aws', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
                     script {
                         sh """
                             cd terraform
