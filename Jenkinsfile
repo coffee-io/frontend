@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh """
                     aws s3 cp s3://coffee-artifacts/source_has_changed ~/bin
-                    aws s3 cp s3://coffee_artifacts/update_source_cksum ~/bin
+                    aws s3 cp s3://coffee-artifacts/update_source_cksum ~/bin
                 """
             }
         }
