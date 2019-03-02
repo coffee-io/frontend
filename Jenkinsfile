@@ -50,6 +50,7 @@ pipeline {
 
         stage('Deploy application') {
             steps {
+                sh ''
                 /*
                 sh """
                     set +e; cmp --silent /artifacts/tmp/coffee.zip /artifacts/coffee.zip ; ret=\$? ; set -e
