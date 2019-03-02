@@ -42,7 +42,7 @@ pipeline {
         stage('Deploy application') {
             steps {
                 sh """
-                    if [! -f /artifacts/coffee.zip ] || cmp --silent /artifacts/tmp/coffee.zip /artifacts/coffee.zip; then
+                    if [ ! -f /artifacts/coffee.zip ] || cmp --silent /artifacts/tmp/coffee.zip /artifacts/coffee.zip; then
                         cp /artifacts/tmp/coffee.zip /artifacts/coffee.zip
                         mkdir -p /tmp/upload_s3
                         unzip /artifacts/coffee.zip -d /tmp/upload_s3
