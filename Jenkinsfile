@@ -48,7 +48,8 @@ pipeline {
                         mkdir -p /tmp/upload_s3
                         rm -rf /tmp/upload_s3
                         unzip /artifacts/coffee.zip -d /tmp/upload_s3
-                        aws s3 cp /tmp/upload_s3/ s3://coffee-prod/ --recursive
+                        #aws s3 cp /tmp/upload_s3/ s3://coffee-prod/ --recursive
+                        aws s3 sync /tmp/upload_s3/ s3://coffee-prod/ --acl public-read
                     else
                         echo Not deployed, same code as previous deploy.
                     fi
