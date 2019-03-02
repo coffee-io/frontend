@@ -5,8 +5,11 @@ pipeline {
     agent any
 
     environment {
-        CI               = true
-        HOME             = '.'
+        CI                    = true
+        HOME                  = '.'
+        AWS_ID                = credentials("aws")
+        AWS_ACCESS_KEY_ID     = "${env.AWS_ID_USR}"
+        AWS_SECRET_ACCESS_KEY = "${env.AWS_ID_PSW}"
     }
 
     stages {
@@ -27,23 +30,23 @@ pipeline {
 
         stage('Deploy infrastructure') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'aws', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
-                    script {
-                        sh """
-                            cd terraform
-                            terraform init -input=false -backend-config='access_key=$USER' -backend-config='secret_key=$PASS'
-                            terraform apply -no-color -input=false -auto-approve -lock=false -var 'access_key=$USER' -var 'secret_key=$PASS'
-                        """
-                    }
-                }
+                sh """
+                    cd terraform
+                    terraform init -input=false 
+                    terraform apply -no-color -input=false -auto-approve -lock=false
+                """
             }
         }
 
         /*
         stage('Deploy application') {
+            steps {
+                withAWS(region:'us-east-1', credentials:'aws') {
+                    s3Upload(file: 'build', bucket: "coffee-prod")
+                }
+            }
         }
         */
-
     }
 
 }
