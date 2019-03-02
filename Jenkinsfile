@@ -39,12 +39,11 @@ pipeline {
                     """, returnStatus: true
                     if (ret == 33) {
                         currentBuild.result = 'SUCCESS'
+                        System.exit(0)
                     }
                 }
             }
         }
-        if (ret == 33)
-            return
 
         stage('Build container') {
             steps {
