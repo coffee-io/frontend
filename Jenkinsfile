@@ -13,6 +13,7 @@ pipeline {
         AWS_REGION            = "us-east-1"
     }
 
+/*
     stages {
 
         stage('Download utilities') {
@@ -52,13 +53,14 @@ pipeline {
                 sh 'docker run -v /artifacts/tmp:/tmp/artifacts frontend'
             }
         }
+*/
 
         stage('Deploy infrastructure') {
             steps {
                 sh """
                     cd terraform
-                    rm -rf .terraform
-                    terraform init -input=false 
+                    terraform refresh
+                    terraform init -INPUT=false 
                     terraform apply -no-color -input=false -auto-approve -lock=false
                 """
             }
