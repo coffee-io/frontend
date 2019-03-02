@@ -18,7 +18,7 @@ pipeline {
         stage('Download utilities') {
             steps {
                 sh """
-                    mkdir -p bin
+                    set +e; mkdir -p bin; set -e
                     aws s3 cp s3://coffee-artifacts/source_has_changed bin/
                     aws s3 cp s3://coffee-artifacts/update_source_cksum bin/
                 """
