@@ -32,7 +32,7 @@ pipeline {
                         sh """
                             cd terraform
                             terraform init -backend-config='access_key=$USER' -backend-config='secret_key=$PASS'
-                            terraform apply -no-color -input=false -var 'access_key=$USER' -var 'secret_key=$PASS'
+                            terraform apply -no-color -input=false -lock=false -var 'access_key=$USER' -var 'secret_key=$PASS'
                         """
                     }
                 }
