@@ -60,7 +60,7 @@ pipeline {
                 sh """
                     cd terraform
                     terraform refresh
-                    terraform init -INPUT=false 
+                    terraform init -input=false 
                     terraform apply -no-color -input=false -auto-approve -lock=false
                 """
             }
