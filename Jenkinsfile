@@ -15,6 +15,15 @@ pipeline {
 
     stages {
 
+        stage('Download utilities') {
+            steps {
+                sh """
+                    aws s3 cp s3://coffee_artifacts/source_has_changed /usr/local/bin
+                    aws s3 cp s3://coffee_artifacts/update_source_cksum /usr/local/bin
+                """
+            }
+        }
+
         /*
         stage('Build container') {
             steps {
@@ -27,7 +36,6 @@ pipeline {
                 sh 'docker run -v /artifacts/tmp:/tmp/artifacts frontend'
             }
         }
-        */
 
         stage('Deploy infrastructure') {
             steps {
@@ -38,9 +46,11 @@ pipeline {
                 """
             }
         }
+        */
 
         stage('Deploy application') {
             steps {
+                /*
                 sh """
                     set +e; cmp --silent /artifacts/tmp/coffee.zip /artifacts/coffee.zip ; ret=\$? ; set -e
                     if [ ! -f /artifacts/coffee.zip ] || [ \$ret -ne 0 ]; then
@@ -54,6 +64,7 @@ pipeline {
                         echo Not deployed, same code as previous deploy.
                     fi
                 """
+                */
             }
         }
     }
