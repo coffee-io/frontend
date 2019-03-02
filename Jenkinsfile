@@ -46,6 +46,7 @@ pipeline {
                     if [ ! -f /artifacts/coffee.zip ] || [ \$ret -ne 0 ]; then
                         cp /artifacts/tmp/coffee.zip /artifacts/coffee.zip
                         mkdir -p /tmp/upload_s3
+                        rm -rf /tmp/upload_s3
                         unzip /artifacts/coffee.zip -d /tmp/upload_s3
                     else
                         echo Not deployed, same code as previous deploy.
