@@ -30,8 +30,7 @@ pipeline {
         stage('Check if sources have changed') {
             steps {
                 sh """
-                    ls
-                    has_changed=\$(/tmp/bin/source_has_changed frontend src/ | head -c 1)
+                    has_changed=\$(/tmp/bin/source_has_changed frontend coffee/src/ | head -c 1)
                     if [ "\$has_changed" = "n" ]; then
                         echo Source files have not changed, exiting.
                         exit 0
