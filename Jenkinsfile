@@ -37,7 +37,7 @@ pipeline {
                             exit 33
                         fi
                     """, returnStatus: true
-                    if (ret.getStatus == 33)
+                    if (ret == 33)
                         return 0
                 }
             }
