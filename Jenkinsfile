@@ -23,10 +23,21 @@ pipeline {
             }
         }
 
-        /*
         stage('Deploy infrastructure') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'ci', usernameVariable: 'USER', passwordVariable: 'PASS')]) {
+                    script {
+                        sh """
+                            cd terraform
+                            terraform init -backend-config='access_key=$USER' -backend-config='secret_key=$PASS'
+                            terraform apply -var 'access_key=$USER' -var 'secret_key=$PASS'
+                        """
+                    }
+                }
+            }
         }
 
+        /*
         stage('Deploy application') {
         }
         */
