@@ -10,7 +10,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        fetch('https://4zdnxxpky3.execute-api.us-east-1.amazonaws.com/prod/ingredients')
+        fetch('https://coffee-api.gamesmith.co.uk/hello')
             .then(response => response.json())
             .then(data => this.setState({ value: data.value }));
     }
