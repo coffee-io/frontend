@@ -15,7 +15,6 @@ pipeline {
 
     stages {
 
-/*
         stage('Download utilities') {
             steps {
                 sh """
@@ -53,7 +52,6 @@ pipeline {
                 sh 'docker run -v /artifacts/tmp:/tmp/artifacts frontend'
             }
         }
-*/
 
         stage('Deploy infrastructure') {
             steps {
