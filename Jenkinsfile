@@ -59,11 +59,12 @@ pipeline {
                     cd terraform
                     terraform init -input=false 
                     terraform apply -no-color -input=false -auto-approve -lock=false
+                    terraform output distribution_id > distribution_id.txt
                 """
             }
         }
 
-        stage('Deploy application') {
+        stage('Deploy application to S3') {
             steps {
                 sh """
                     rm -rf /tmp/upload_s3
@@ -72,6 +73,12 @@ pipeline {
                     aws s3 sync /tmp/upload_s3/ s3://coffee-prod/ --acl public-read
                     /tmp/bin/update_source_cksum frontend coffee/src/
                 """
+            }
+        }
+
+        stage('Create invalidation in CloudFront') {
+            steps {
+                sh 'aws cloudfront create-invalidation --distribution-id $(<distribution_id.txt) --paths "/*"'
             }
         }
     }
