@@ -60,6 +60,7 @@ pipeline {
                     terraform init -input=false 
                     terraform apply -no-color -input=false -auto-approve -lock=false
                     terraform output distribution_id > ../distribution_id.txt
+                    cat ../distribution_id.txt
                 """
             }
         }
