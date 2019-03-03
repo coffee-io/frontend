@@ -59,7 +59,7 @@ pipeline {
                     cd terraform
                     terraform init -input=false 
                     terraform apply -no-color -input=false -auto-approve -lock=false
-                    terraform output distribution_id > distribution_id.txt
+                    terraform output distribution_id > ../distribution_id.txt
                 """
             }
         }
