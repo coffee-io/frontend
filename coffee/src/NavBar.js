@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+/*
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons'
+                    <FontAwesomeIcon icon={faCoffee} />
+                    */
 
 export default class NavBar extends Component {
 
@@ -9,7 +12,6 @@ export default class NavBar extends Component {
         return (
             <nav className="navbar navbar-expand-sm navbar-light bg-transparent">
                 <Link className="navbar-brand" to="/">
-                    <FontAwesomeIcon icon={faCoffee} />
                 </Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                   <span className="navbar-toggler-icon"></span>
