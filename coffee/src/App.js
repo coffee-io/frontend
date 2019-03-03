@@ -1,25 +1,22 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class App extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: null,
-        }
-    }
-
-    componentDidMount() {
-        fetch('https://coffee-api.gamesmith.co.uk/hello')
-            .then(response => response.json())
-            .then(data => this.setState({ value: data.value }));
-    }
-
     render() {
         return (
-            <p>Hello {this.state.value}!</p>
+            <div>
+                <p>Hello!</p>
+                <nav className="navbar fixed-bottom navbar-expand-sm navbar-dark bg-danger">
+                    <span className="navbar-text">
+                        IMPORTANT! This is not a real website, it serves as my portfolio for web development on cloud.
+                        See more about the <Link to="/architecture">serverless cloud architecture</Link> used on this website.
+                    </span>
+                </nav>
+            </div>
         );
     }
+
 }
 
 export default App;
