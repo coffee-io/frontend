@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default function PlaceOrder(props) {
-    return <p>Not implemented</p>;
+export default class PlaceOrder extends Component {
+    render() {
+        return <p>Not implemented</p>;
+    }
 }
 
 // vim:st=4:sts=4:sw=4:expandtab
