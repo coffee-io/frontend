@@ -7,22 +7,25 @@ import Delivery from './Delivery';
 import Admin from './Admin';
 import Architecture from './Architecture';
 import NavBar from './NavBar';
+import { BrowserRouter } from 'react-router-dom';
 
 class App extends Component {
 
     render() {
         return (
-            <div>
-                <NavBar />
-                <Switch>
-                    <Route exact path='/' component={Home}/>
-                    <Route exact path='/order' component={PlaceOrder}/>
-                    <Route exact path='/delivery' component={Delivery}/>
-                    <Route exact path='/admin' component={Admin}/>
-                    <Route exact path='/architecture' component={Architecture}/>
-                </Switch>
-                <BottomMessage />
-            </div>
+            <BrowserRouter>
+                <div>
+                    <NavBar />
+                    <Switch>
+                        <Route exact path='/' component={Home}/>
+                        <Route exact path='/order' component={PlaceOrder}/>
+                        <Route exact path='/delivery' component={Delivery}/>
+                        <Route exact path='/admin' component={Admin}/>
+                        <Route exact path='/architecture' component={Architecture}/>
+                    </Switch>
+                    <BottomMessage />
+                </div>
+            </BrowserRouter>
         );
     }
 
