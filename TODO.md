@@ -14,9 +14,9 @@
 
 # Next steps
 
-- Create reset function (backend)
-- Create ingredients microservice (backend)
-- Create recipe microservice (backend)
+- Create reset function (backend) - ok
+- Create ingredients microservice (backend) - ok
+- Create recipe microservice (backend) - ok
 - Create main cart (frontend)
   - Main cart + add button
   - Add coffee (premade)

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom'
 import BottomMessage from './BottomMessage';
 import Home from './Home';
-import PlaceOrder from './PlaceOrder';
+import Cart from './cart/Cart';
 import Delivery from './Delivery';
 import Admin from './Admin';
 import Architecture from './Architecture';
@@ -18,7 +18,7 @@ class App extends Component {
                     <NavBar />
                     <Switch>
                         <Route exact path='/' component={Home}/>
-                        <Route exact path='/order' component={PlaceOrder}/>
+                        <Route exact path='/cart' component={Cart}/>
                         <Route exact path='/delivery' component={Delivery}/>
                         <Route exact path='/admin' component={Admin}/>
                         <Route exact path='/architecture' component={Architecture}/>

@@ -15,32 +15,6 @@ pipeline {
 
     stages {
 
-        stage('Download utilities') {
-            steps {
-                sh """
-                    set +e; mkdir -p /tmp/bin; set -e
-                    aws s3 cp s3://coffee-artifacts/source_has_changed /tmp/bin/
-                    chmod +x /tmp/bin/source_has_changed
-                    aws s3 cp s3://coffee-artifacts/update_source_cksum /tmp/bin/
-                    chmod +x /tmp/bin/update_source_cksum
-                """
-            }
-        }
-
-        stage('Check if sources have changed') {
-            steps {
-                script {
-                    sh """
-                        has_changed=\$(/tmp/bin/source_has_changed frontend coffee/src/ | head -c 1)
-                        if [ "\$has_changed" = "n" ]; then
-                            echo Source files have not changed, exiting.
-                            echo TODO not really...
-                        fi
-                    """
-                }
-            }
-        }
-
         stage('Build container') {
             steps {
                 sh 'docker build -t frontend .'

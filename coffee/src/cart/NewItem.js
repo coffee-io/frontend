@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-export default class PlaceOrder extends Component {
+export default class NewItem extends Component {
     render() {
-        return <p>Not implemented</p>;
+        return <p>NewItem: not implemented</p>;
     }
 }
 

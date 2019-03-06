@@ -3,15 +3,15 @@ import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
-const imageStyle = {
-    marginRight: "8px",
-}
+const imageStyle = { marginRight: "8px", }
+const navbarStyle = { backgroundColor: "CornSilk", }
+
 
 export default class NavBar extends Component {
 
     render() {
         return (
-            <nav className="navbar navbar-expand-sm navbar-light bg-transparent">
+            <nav className="navbar navbar-expand-sm navbar-light" style={navbarStyle}>
                 <Link className="navbar-brand" to="/">
                     <FontAwesomeIcon icon={faCoffee} size="lg" style={imageStyle} className="d-inline-block align-middle" />
                     <span className="navbar-brand mb-0 h1">mycoffee</span>
@@ -21,7 +21,7 @@ export default class NavBar extends Component {
                 </button> 
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
-                        <NavLink className="nav-item nav-link" activeClassName="active" to="/order">Place new order</NavLink>
+                        <NavLink className="nav-item nav-link" activeClassName="active" to="/cart">Shopping Cart</NavLink>
                         <NavLink className="nav-item nav-link" activeClassName="active" to="/delivery">Delivery</NavLink>
                         <NavLink className="nav-item nav-link" activeClassName="active" to="/admin">Admin</NavLink>
                         <NavLink className="nav-item nav-link" activeClassName="active" to="/architecture">Application architecture</NavLink>
