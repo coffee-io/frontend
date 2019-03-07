@@ -4,14 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 const imageStyle = { marginRight: "8px", }
-const navbarStyle = { backgroundColor: "CornSilk", }
+const navbarStyle = { backgroundColor: "#f2e6d9", }
 
 
 export default class NavBar extends Component {
 
     render() {
         return (
-            <nav className="navbar navbar-expand-sm navbar-light" style={navbarStyle}>
+            <nav className="navbar navbar-expand-sm navbar-light shadow-sm border-bottom" style={navbarStyle}>
                 <Link className="navbar-brand" to="/">
                     <FontAwesomeIcon icon={faCoffee} size="lg" style={imageStyle} className="d-inline-block align-middle" />
                     <span className="navbar-brand mb-0 h1">mycoffee</span>
