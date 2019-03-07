@@ -9,7 +9,7 @@ export default function Home(props) {
                 <p className="lead font-weight-normal mb-4">
                     Customize your cup of coffee and have it delievered to your home or office, fast!
                 </p>
-                <Link className="btn btn-lg btn-primary" to="/order">Place your order</Link>
+                <Link className="btn btn-lg btn-primary" to="/cart">Place your order</Link>
               </div>
         </div>
     );

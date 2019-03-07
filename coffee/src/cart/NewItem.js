@@ -1,51 +1,19 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class NewItem extends Component {
     constructor(props) {
         super(props);
-        this.state = { 
-            recipes: [
-                {
-                    "recipeName": "Café con leche",
-                    "description": "The perfect way to start your morning.",
-                    "size": "medium",
-                    "totalCost": 5,
-                    "ingredients": [
-                        {
-                        "name": "Brewed (string)",
-                        "type": "coffee",
-                        "cost": 3,
-                        "color": "#610B0B",
-                        "percentage": 0.5
-                        },         {
-                        "name": "Milk",
-                        "type": "liquid",
-                        "cost": 2,
-                        "color": "#FAFAFA",
-                        "percentage": 0.5
-                        }        
-                    ]
-                }, {
-                    "recipeName": "Espresso",
-                    "description": "A creamy, strong coffee prepared under ideal conditions of temperature and pressure.",
-                    "size": "small",
-                    "totalCost": 4,
-                    "ingredients": [
-                        {
-                        "name": "Espresso",
-                        "type": "coffee",
-                        "cost": 4,
-                        "color": "#000000",
-                        "percentage": 1
-                        }        
-                    ]
-                }
-            ]
-        };
+        this.state = { recipes: [] };
     }
 
     componentDidMount() {
-        // TODO - get info from external URL
+        axios.get('https://coffee-api.gamesmith.co.uk/recipes/global/')
+            .then(res => {
+                console.log("Data loaded from API");
+                console.log(res.data);
+                this.setState({ recipes: res.data });
+            });
     }
 
     render() {
@@ -54,14 +22,12 @@ export default class NewItem extends Component {
             boxes.push(
                 <div className="card mb-4 box-shadow" key={recipe.recipeName}>
                     <div className="card-header">
-                        <h4 className="my-0 font-weight-normal">
-                            {recipe.recipeName}
-                        </h4>
+                        <h4 className="my-0 font-weight-normal">{recipe.recipeName}</h4>
                     </div>
-                    <div className="card-body">
+                    <div className="card-body d-flex flex-column">
                         <h1 className="card-title pricing-card-title">${recipe.totalCost}</h1>
                         <p>{recipe.description}</p>
-                        <button type="button" className="btn btn-lg btn-block btn-primary">
+                        <button type="button" className="btn btn-lg btn-block btn-primary mt-auto">
                             Add to cart
                         </button>
                     </div>
@@ -79,15 +45,11 @@ export default class NewItem extends Component {
                     <div className="card-deck mb-3 text-center">
                         <div className="card mb-4 box-shadow">
                             <div className="card-header">
-                                <h4 className="my-0 font-weight-normal">
-                                    Customize
-                                </h4>
+                                <h4 className="my-0 font-weight-normal">Customize</h4>
                             </div>
-                            <div className="card-body">
-                                <p>
-                                    Craft the perfect cup of coffee, just the way you like it.
-                                </p>
-                                <button type="button" className="btn btn-lg btn-block btn-outline-primary">
+                            <div className="card-body d-flex flex-column">
+                                <p>Craft the perfect cup of coffee, just the way you like it.</p>
+                                <button type="button" className="btn btn-lg btn-block btn-outline-primary mt-auto">
                                     Create
                                 </button>
                             </div>
