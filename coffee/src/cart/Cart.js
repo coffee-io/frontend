@@ -14,25 +14,43 @@ export default class Cart extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            editing: null,
+            editing: false,
         }
     }
 
     componentDidMount() {
         // load cart
-        const cart = sessionStorage.getItem('cart');
-        if (!cart)
-            sessionStorage.setItem('cart', JSON.stringify(emptyCart));
-        this.forceUpdate();
+        let cart = JSON.parse(sessionStorage.getItem('cart'));
+        if (!cart) {
+            cart = {...emptyCart};
+            sessionStorage.setItem('cart', JSON.stringify(cart));
+        }
+        console.log(cart);
+
+        // if there are no items in the cart, start editing
+        this.setState({ editing: (cart.items.length === 0) });
+    }
+
+    recalculateValues(cart) {
+    }
+
+    addItemToCart = (item) => {
+        let cart = JSON.parse(sessionStorage.getItem('cart'));
+        cart.items.push(item);
+        this.recalculateValues(cart);
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+        
+        console.log("Item added to cart.");
+        console.log(item);
+        this.setState({ editing: false });
     }
 
     render() {
         const cart = JSON.parse(sessionStorage.getItem('cart'));
         if (!cart)
             return <p>Loading cart...</p>;
-        if (this.state.editing || cart.items.length === 0) {
-            const item = this.state.editing ? this.state.editing : cart.items.length;
-            return <NewItem currentItem={item} />;
+        if (this.state.editing) {
+            return <NewItem addItemToCart={this.addItemToCart} />;
         } else {
             return <CartList />;
         }

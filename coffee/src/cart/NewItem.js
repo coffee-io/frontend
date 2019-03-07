@@ -27,7 +27,7 @@ export default class NewItem extends Component {
                     <div className="card-body d-flex flex-column">
                         <h1 className="card-title pricing-card-title">${recipe.totalCost}</h1>
                         <p>{recipe.description}</p>
-                        <button type="button" className="btn btn-lg btn-block btn-primary mt-auto">
+                        <button type="button" onClick={() => this.props.addItemToCart(recipe)} className="btn btn-lg btn-block btn-primary mt-auto">
                             Add to cart
                         </button>
                     </div>
