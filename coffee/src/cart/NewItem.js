@@ -16,23 +16,34 @@ export default class NewItem extends Component {
             });
     }
 
+    box(title, cost, description, button_function, button_text, button_outline) {
+        const cost_element = cost ? <h1 className="card-title pricing-card-title">${cost}</h1> : <div></div>;
+        const buttonClass = "btn btn-lg btn-block btn-" + (button_outline ? 'outline-' : '') + "primary mt-auto"
+        return (
+            <div className="card mb-4 box-shadow" key={"box_" + title}>
+                <div className="card-header">
+                    <h4 className="my-0 font-weight-normal">{title}</h4>
+                </div>
+                <div className="card-body d-flex flex-column">
+                    {cost_element}
+                    <p>{description}</p>
+                    <button type="button" onClick={button_function} className={buttonClass}>
+                        {button_text}
+                    </button>
+                </div>
+            </div>
+        );
+    }
+
     render() {
         var boxes = [];
-        for (const recipe of this.state.recipes) {
-            boxes.push(
-                <div className="card mb-4 box-shadow" key={recipe.recipeName}>
-                    <div className="card-header">
-                        <h4 className="my-0 font-weight-normal">{recipe.recipeName}</h4>
-                    </div>
-                    <div className="card-body d-flex flex-column">
-                        <h1 className="card-title pricing-card-title">${recipe.totalCost}</h1>
-                        <p>{recipe.description}</p>
-                        <button type="button" onClick={() => this.props.addItemToCart(recipe)} className="btn btn-lg btn-block btn-primary mt-auto">
-                            Add to cart
-                        </button>
-                    </div>
-                </div>
-            );
+        if (this.state.recipes.length === 0) {
+            boxes.push(this.box("Loading...", null, "Loading...", () => {}, "Please wait...", true));
+        } else {
+            for (const recipe of this.state.recipes) {
+                boxes.push(this.box(recipe.recipeName, recipe.totalCost, recipe.description, 
+                    () => this.props.addItemToCart(recipe), "Add to cart", false));
+            }
         }
 
         return (
@@ -43,17 +54,8 @@ export default class NewItem extends Component {
 
                 <div className="container">
                     <div className="card-deck mb-3 text-center">
-                        <div className="card mb-4 box-shadow">
-                            <div className="card-header">
-                                <h4 className="my-0 font-weight-normal">Customize</h4>
-                            </div>
-                            <div className="card-body d-flex flex-column">
-                                <p>Craft the perfect cup of coffee, just the way you like it.</p>
-                                <button type="button" className="btn btn-lg btn-block btn-outline-primary mt-auto">
-                                    Create
-                                </button>
-                            </div>
-                        </div>
+                        {this.box("Customize", null, "Craft the perfect cup of coffee, just the way you like it.", 
+                            () => { /* TODO */ }, "Create", true)}
                         {boxes}
                     </div>
                 </div>

@@ -14,7 +14,7 @@ export default class Cart extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            editing: false,
+            stage: 'cart',   // possible values: cart, new_item, finalizing
         }
     }
 
@@ -27,14 +27,20 @@ export default class Cart extends Component {
         }
         console.log(cart);
 
-        // if there are no items in the cart, start editing
-        this.setState({ editing: (cart.items.length === 0) });
+        // if there are no items in the cart, start stage
+        this.setState({ stage: (cart.items.length === 0) ? 'new_item' : 'cart' });
+    }
+
+    addNewItem = () => {
+        this.setState({ stage: 'new_item' });
     }
 
     recalculateValues(cart) {
+        // TODO
     }
 
     addItemToCart = (item) => {
+        // TODO - is it the same as some other item?
         let cart = JSON.parse(sessionStorage.getItem('cart'));
         cart.items.push(item);
         this.recalculateValues(cart);
@@ -42,17 +48,40 @@ export default class Cart extends Component {
         
         console.log("Item added to cart.");
         console.log(item);
-        this.setState({ editing: false });
+        this.setState({ stage: 'cart' });
+    }
+
+    removeItemFromCart = (i) => {
+        let cart = JSON.parse(sessionStorage.getItem('cart'));
+        cart.items.splice(i, 1);
+        this.recalculateValues(cart);
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+
+        console.log("Item " + (i+1) + " removed from cart.");
+        this.setState({ stage: 'cart' });
+    }
+
+    finalizePurchase = () => {
+        // TODO
     }
 
     render() {
         const cart = JSON.parse(sessionStorage.getItem('cart'));
         if (!cart)
             return <p>Loading cart...</p>;
-        if (this.state.editing) {
-            return <NewItem addItemToCart={this.addItemToCart} />;
-        } else {
-            return <CartList />;
+        switch (this.state.stage) {
+            case 'new_item':
+                return <NewItem addItemToCart={this.addItemToCart} />;
+            case 'cart':
+                return <CartList 
+                            cart={cart} 
+                            addNewItem={this.addNewItem} 
+                            removeItemFromCart={this.removeItemFromCart}
+                            finalizePurchase={this.finalizePurchase} />;
+            case 'finalizing':
+                return <p>TODO</p>;  // TODO
+            default:
+                throw Error("Invalid stage value '" + this.state.stage + "'");
         }
     }
 }
