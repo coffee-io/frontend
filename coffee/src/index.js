@@ -5,10 +5,8 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import configureStore from './configureStore';
 import './custom.scss';
-
-const store = configureStore();
+import store from './state/store';
 
 window.jQuery = window.$ = require('jquery/dist/jquery.min.js');
 require('bootstrap/dist/js/bootstrap.min.js');

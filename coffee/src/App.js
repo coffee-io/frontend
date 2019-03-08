@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom'
-import BottomMessage from './BottomMessage';
+import NavBar from './general/NavBar';
+import BottomMessage from './general/BottomMessage';
 import Home from './Home';
 import Cart from './cart/Cart';
-import Delivery from './Delivery';
-import Admin from './Admin';
-import Architecture from './Architecture';
-import NavBar from './NavBar';
+import NewItem from './cart/NewItem';
+import Delivery from './delivery/Delivery';
+import Admin from './admin/Admin';
+import Architecture from './architecture/Architecture';
 import { BrowserRouter } from 'react-router-dom';
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
                     <Switch>
                         <Route exact path='/' component={Home}/>
                         <Route exact path='/cart' component={Cart}/>
+                        <Route exact path='/cart/newitem' component={NewItem}/>
                         <Route exact path='/delivery' component={Delivery}/>
                         <Route exact path='/admin' component={Admin}/>
                         <Route exact path='/architecture' component={Architecture}/>

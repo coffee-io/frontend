@@ -1,89 +1,79 @@
 import React, { Component } from 'react';
-import NewItem from './NewItem';
-import CartList from './CartList';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { removeItem } from '../state/actions';
 
-const emptyCart = {
-    items: [],
-    deliveryCost: 0.0,
-    taxCost: 0.0,
-    total: 0.0,
+const mapStateToProps = state => {
+    return { cart: state.cart };
 }
 
-export default class Cart extends Component {
+function mapDispatchToProps(dispatch) {
+    return {
+        removeItem: i => dispatch(removeItem(i)),
+    };
+}
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            stage: 'cart',   // possible values: cart, new_item, finalizing
+class Cart extends Component {
+
+    removeItem = (i) => {
+        if (window.confirm("Are you sure you want to remove this item?")) {
+            this.props.removeItem(i);
         }
-    }
-
-    componentDidMount() {
-        // load cart
-        let cart = JSON.parse(sessionStorage.getItem('cart'));
-        if (!cart) {
-            cart = {...emptyCart};
-            sessionStorage.setItem('cart', JSON.stringify(cart));
-        }
-        console.log(cart);
-
-        // if there are no items in the cart, start stage
-        this.setState({ stage: (cart.items.length === 0) ? 'new_item' : 'cart' });
-    }
-
-    addNewItem = () => {
-        this.setState({ stage: 'new_item' });
-    }
-
-    recalculateValues(cart) {
-        // TODO
-    }
-
-    addItemToCart = (item) => {
-        // TODO - is it the same as some other item?
-        let cart = JSON.parse(sessionStorage.getItem('cart'));
-        cart.items.push(item);
-        this.recalculateValues(cart);
-        sessionStorage.setItem('cart', JSON.stringify(cart));
-        
-        console.log("Item added to cart.");
-        console.log(item);
-        this.setState({ stage: 'cart' });
-    }
-
-    removeItemFromCart = (i) => {
-        let cart = JSON.parse(sessionStorage.getItem('cart'));
-        cart.items.splice(i, 1);
-        this.recalculateValues(cart);
-        sessionStorage.setItem('cart', JSON.stringify(cart));
-
-        console.log("Item " + (i+1) + " removed from cart.");
-        this.setState({ stage: 'cart' });
-    }
-
-    finalizePurchase = () => {
-        // TODO
     }
 
     render() {
-        const cart = JSON.parse(sessionStorage.getItem('cart'));
-        if (!cart)
-            return <p>Loading cart...</p>;
-        switch (this.state.stage) {
-            case 'new_item':
-                return <NewItem addItemToCart={this.addItemToCart} />;
-            case 'cart':
-                return <CartList 
-                            cart={cart} 
-                            addNewItem={this.addNewItem} 
-                            removeItemFromCart={this.removeItemFromCart}
-                            finalizePurchase={this.finalizePurchase} />;
-            case 'finalizing':
-                return <p>TODO</p>;  // TODO
-            default:
-                throw Error("Invalid stage value '" + this.state.stage + "'");
+        let rows = [];
+
+        for (let i = 0; i < this.props.cart.items.length; ++i) {
+            const func = () => this.removeItem(i);
+            const item = this.props.cart.items[i];
+            rows.push(
+                <tr key={'item_' + i}>
+                    <th scope="row" className="text-right">{i+1}</th>
+                    <td>{item.recipeName}</td>
+                    <td className="text-right">${item.totalCost.toFixed(2)}</td>
+                    <td className="text-center">
+                        <button type="button" className="btn btn-danger btn-sm" onClick={func}>
+                            X
+                        </button>
+                    </td>
+                </tr>
+            );
         }
+
+        return (
+            <div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto">
+                <table className="table table-hover table-responsive">
+                    <thead>
+                        <tr>
+                            <th scope="col" className="text-right">#</th>
+                            <th scope="col" className="w-50 text-left">Item</th>
+                            <th scope="col" className="text-right">Price</th>
+                            <th scope="col" className="text-center">Delete item</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rows}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <th scope="row">Total</th>
+                            <th className="text-right" scope="row">${this.props.cart.total.toFixed(2)}</th>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <div>
+                    <Link className="btn btn-primary mr-2" to="/cart/newitem">Add a new item</Link>
+                    <button type="button" className="btn btn-success mr-2" onClick={this.props.finalizePurchase}>Finalize purchase</button>
+                </div>
+            </div>
+        );
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
 
 // vim:st=4:sts=4:sw=4:expandtab

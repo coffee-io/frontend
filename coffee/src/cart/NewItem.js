@@ -1,22 +1,26 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { addItem, updateRecipes } from '../state/actions';
 
-export default class NewItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { recipes: [] };
-    }
+const mapStateToProps = state => {
+    return { recipes: state.recipes };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        addItem: item => dispatch(addItem(item)),
+        updateRecipes: () => dispatch(updateRecipes()),
+    };
+}
+
+class NewItem extends Component {
 
     componentDidMount() {
-        axios.get('https://coffee-api.gamesmith.co.uk/recipes/global/')
-            .then(res => {
-                console.log("Data loaded from API");
-                console.log(res.data);
-                this.setState({ recipes: res.data });
-            });
+        this.props.updateRecipes();
     }
 
-    box(title, cost, description, button_function, button_text, button_outline) {
+    box(title, cost, description, button_function, button_text, button_outline, link) {
         const cost_element = cost ? <h1 className="card-title pricing-card-title">${cost}</h1> : <div></div>;
         const buttonClass = "btn btn-lg btn-block btn-" + (button_outline ? 'outline-' : '') + "primary mt-auto"
         return (
@@ -27,9 +31,9 @@ export default class NewItem extends Component {
                 <div className="card-body d-flex flex-column">
                     {cost_element}
                     <p>{description}</p>
-                    <button type="button" onClick={button_function} className={buttonClass}>
+                    <Link onClick={button_function} className={buttonClass} to={link}>
                         {button_text}
-                    </button>
+                    </Link>
                 </div>
             </div>
         );
@@ -37,12 +41,12 @@ export default class NewItem extends Component {
 
     render() {
         var boxes = [];
-        if (this.state.recipes.length === 0) {
-            boxes.push(this.box("Loading...", null, "Loading...", () => {}, "Please wait...", true));
+        if (this.props.recipes.length === 0) {
+            boxes.push(this.box("Loading...", null, "Loading...", () => {}, "Please wait...", true, "/cart/newitem"));
         } else {
-            for (const recipe of this.state.recipes) {
+            for (const recipe of this.props.recipes) {
                 boxes.push(this.box(recipe.recipeName, recipe.totalCost, recipe.description, 
-                    () => this.props.addItemToCart(recipe), "Add to cart", false));
+                    () => this.props.addItem(recipe), "Add to cart", false, "/cart"));
             }
         }
 
@@ -55,7 +59,7 @@ export default class NewItem extends Component {
                 <div className="container">
                     <div className="card-deck mb-3 text-center">
                         {this.box("Customize", null, "Craft the perfect cup of coffee, just the way you like it.", 
-                            () => { /* TODO */ }, "Create", true)}
+                            () => { /* TODO */ }, "Create", true, "/custom")}
                         {boxes}
                     </div>
                 </div>
@@ -63,5 +67,7 @@ export default class NewItem extends Component {
         );
     }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewItem);
 
 // vim:st=4:sts=4:sw=4:expandtab
