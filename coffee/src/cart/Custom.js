@@ -22,24 +22,37 @@ class Custom extends Component {
     render() {
         function ingredientButton(name, color, lightColor) {
             const myStyle = {
-                // color: "#000000",
+                color: lightColor ? "black" : "white",
                 backgroundColor: color,
-                borderColor: lightColor ? "white" : "black",
+                borderColor: "black",
             }
             return <button type="button" className="btn btn-primary" style={myStyle}>{name}</button>;
         }
 
-        console.log(this.props.ingredients);
+        function liquidButton(name, color, lightColor, unit) {
+            const myStyle = {
+                color: lightColor ? "black" : "white",
+                backgroundColor: color,
+                borderColor: "black",
+            }
+            return (
+                <div className="dropdown-menu" style={myStyle} aria-labelledby="btnGroupDrop1">
+                    <a className="dropdown-item" href="#!">1 {unit}</a>
+                    <a className="dropdown-item" href="#!">2 {unit}</a>
+                    <a className="dropdown-item" href="#!">3 {unit}</a>
+                    <a className="dropdown-item" href="#!">4 {unit}</a>
+                </div>
+            );
+        }
 
         let coffees = [], liquids = [], additional = [];
         for (let ing of this.props.ingredients) {
-            let b = ingredientButton(ing.name, ing.color, ing.lightColor);
             if (ing.type === "coffee")
-                coffees.push(b);
+                coffees.push(ingredientButton(ing.name, ing.color, ing.lightColor));
             else if (ing.type === "liquid")
-                liquids.push(b);
+                liquids.push(ingredientButton(ing.name, ing.color, ing.lightColor));
             else if (ing.type === "added")
-                additional.push(b);
+                additional.push(liquidButton(ing.name, ing.color, ing.lightColor, ing.unit));
             else 
                 console.error("Invalid ingredient type '" + ing.type + "'");
         }
@@ -66,6 +79,12 @@ class Custom extends Component {
                         Liquids
                     </button>
                     {liquids}
+                </div>
+                <div className="btn-group" role="group" aria-label="Additionals">
+                    <button type="button" className="btn btn-outline-dark" style={labelStyle} disabled>
+                        Additionals
+                    </button>
+                    {additional}
                 </div>
             </div>
         );
