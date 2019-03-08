@@ -14,12 +14,12 @@ export function removeItem(i) {
     return { type: Action.REMOVE_ITEM, i };
 }
 
-function recipesUpdated(data) {
-    return { type: Action.RECIPES_UPDATES, data };
-}
-
 export function updateRecipes() {
-    const recipes = JSON.parse(window.sessionStorage.getItem('recipes'));
+    function recipesUpdated(data) {
+        return { type: Action.RECIPES_UPDATES, data };
+    }
+
+    const recipes = JSON.parse(window.localStorage.getItem('recipes'));
     if (recipes) {
         console.log('Recipes loaded from local storage.');
         return { type: Action.RECIPES_UPDATES, data: recipes };
@@ -29,7 +29,7 @@ export function updateRecipes() {
             return axios.get('https://coffee-api.gamesmith.co.uk/recipes/global/')
                 .then(res => {
                     res.data.expiration = Date.now() + 1;
-                    window.sessionStorage.setItem('recipes', JSON.stringify(res.data));
+                    window.localStorage.setItem('recipes', JSON.stringify(res.data));
                     dispatch(recipesUpdated(res.data));
                 })
                 .catch(error => { throw(error); });

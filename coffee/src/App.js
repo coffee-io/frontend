@@ -5,6 +5,7 @@ import BottomMessage from './general/BottomMessage';
 import Home from './Home';
 import Cart from './cart/Cart';
 import NewItem from './cart/NewItem';
+import Custom from './cart/Custom';
 import Delivery from './delivery/Delivery';
 import Admin from './admin/Admin';
 import Architecture from './architecture/Architecture';
@@ -21,6 +22,7 @@ class App extends Component {
                         <Route exact path='/' component={Home}/>
                         <Route exact path='/cart' component={Cart}/>
                         <Route exact path='/cart/newitem' component={NewItem}/>
+                        <Route exact path='/cart/custom' component={Custom}/>
                         <Route exact path='/delivery' component={Delivery}/>
                         <Route exact path='/admin' component={Admin}/>
                         <Route exact path='/architecture' component={Architecture}/>
