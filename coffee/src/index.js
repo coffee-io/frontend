@@ -7,6 +7,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import './custom.scss';
 import store from './state/store';
+// require('dotenv').config()
 
 window.jQuery = window.$ = require('jquery/dist/jquery.min.js');
 require('bootstrap/dist/js/bootstrap.min.js');

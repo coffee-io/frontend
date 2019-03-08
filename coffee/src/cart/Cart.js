@@ -65,7 +65,7 @@ class Cart extends Component {
                     </tfoot>
                 </table>
 
-                <div>
+                <div className="btn-group">
                     <Link className="btn btn-primary mr-2" to="/cart/newitem">Add a new item</Link>
                     <button type="button" className="btn btn-success mr-2" onClick={this.props.finalizePurchase}>Finalize purchase</button>
                 </div>

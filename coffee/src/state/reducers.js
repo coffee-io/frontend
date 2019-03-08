@@ -9,6 +9,7 @@ const initialState = {
         deliveryAddress: {},
     },
     recipes: [],
+    ingredients: [],
 };
 
 function updateCartTotal(cart) {
@@ -29,8 +30,10 @@ export function rootReducer(state = initialState, action) {
         state.cart.items.splice(action.i, 1);
         updateCartTotal(cart);
         state = Object.assign({}, state, { cart });
-    } else if (action.type === Action.RECIPES_UPDATES) {
+    } else if (action.type === Action.RECIPES_UPDATED) {
         return Object.assign({}, state, { recipes: action.data });
+    } else if (action.type === Action.INGREDIENTS_UPDATED) {
+        return Object.assign({}, state, { ingredients: action.data });
     }
     return state;
 }
