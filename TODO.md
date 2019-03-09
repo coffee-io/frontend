@@ -25,6 +25,7 @@
     - Save in local storage
   - E-mail user when finished
   - Deal with errors
+  - Reset lambda - remove and recreate tables / remove from terraform
 - Login
   - Cognito
   - Save recipes
