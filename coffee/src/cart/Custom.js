@@ -13,11 +13,48 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
+const labelStyle = {
+    width: "120px",
+    color: "black",
+    opacity: 1,
+}
+
 class Custom extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            size: "medium",
+            ingredients: [],
+            totalCost: 0.00,
+        }
+    }
 
     componentDidMount() {
         this.props.updateIngredients();
     }
+
+    // 
+    // LOGIC
+    //
+
+    addIngredient = (ingredient_name) => {
+        const ingredient = this.props.ingredients.filter(i => i.name === ingredient_name)[0];
+        this.setState({
+            ingredients: [...this.state.ingredients, ingredient],
+            totalCost: this.state.totalCost + ingredient.cost
+        });
+        console.log("Ingredient added.");
+        console.log(ingredient);
+    }
+
+    sizeChanged = (s) => {
+        this.setState({ size: s });
+    }
+
+    // 
+    // RENDERING
+    //
 
     keys() {
         // organize order of keys
@@ -40,7 +77,7 @@ class Custom extends Component {
             borderColor: "black",
         }
         if (!unit) {
-            return <button type="button" className="btn btn-primary" style={myStyle} key={name}>{name}</button>;
+            return <button onClick={() => this.addIngredient(name)} type="button" className="btn btn-primary" style={myStyle} key={name}>{name}</button>;
         } else {
             return (
                 <div className="btn-group" role="group" key={name}>
@@ -69,12 +106,6 @@ class Custom extends Component {
             }
         }
 
-        const labelStyle = {
-            width: "120px",
-            color: "black",
-            opacity: 1,
-        }
-
         let buttonList = [];
         for (let key of keys) {
             buttonList.push(
@@ -87,17 +118,31 @@ class Custom extends Component {
             );
         }
 
-        console.log(buttonList);
-
         return buttonList;
     }
 
     render() {
+        const optionStyle = { borderColor: "black" };
         return (
             <div className="m-3">
                 <div className="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
                     <p className="lead">Craft your perfect cup of coffee. Click on the buttons below to add the ingredients.</p>
                 </div>
+                <div className="btn-toolbar mb-3" key="Size">
+                    <div className="btn-group btn-group-toggle" data-toggle="buttons">
+                        <button type="button" className="btn btn-outline-dark" style={labelStyle} disabled>Cup size</button>
+                        <label className="btn btn-outline-secondary" style={optionStyle} onClick={() => this.sizeChanged("small")}>
+                            <input type="radio" name="options" id="small" autoComplete="off" />Small
+                        </label>
+                        <label className="btn btn-outline-secondary active" style={optionStyle} onClick={() => this.sizeChanged("medium")}>
+                            <input type="radio" name="options" id="medium" autoComplete="off" defaultChecked />Medium
+                        </label>
+                        <label className="btn btn-outline-secondary" style={optionStyle} onClick={() => this.sizeChanged("large")}>
+                            <input type="radio" name="options" id="large" autoComplete="off" />Large
+                        </label>
+                    </div>
+                </div>
+                <hr />
                 {this.ingredientButtons()}
                 <hr />
                 <div className="btn-group mb-2">
