@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { addItem, updateIngredients } from '../state/actions';
 import Selector from './Selector';
 
@@ -12,12 +13,6 @@ function mapDispatchToProps(dispatch) {
         addItem: item => dispatch(addItem(item)),
         updateIngredients: () => dispatch(updateIngredients()),
     };
-}
-
-const labelStyle = {
-    width: "120px",
-    color: "black",
-    opacity: 1,
 }
 
 class Custom extends Component {
@@ -70,11 +65,6 @@ class Custom extends Component {
         return types;
     }
 
-    ingredientList(key) {
-        let keys = this.keys();
-        return this.props.ingredients.filter(i => i.type === key);
-    }
-
     sizeSelector() {
         return [
             { name: "Small", value: "small" },
@@ -85,7 +75,7 @@ class Custom extends Component {
 
     render() {
         const ingSelectors = this.keys().map(key => {
-            const ingredients = this.ingredientList(key).map(i => ({
+            const ingredients = this.props.ingredients.filter(i => i.type === key).map(i => ({
                 name:       i.name, 
                 value:      i, 
                 color:      i.color, 
@@ -104,7 +94,7 @@ class Custom extends Component {
                 {ingSelectors}
                 <hr />
                 <div className="btn-group mb-2">
-                    <button type="button" className="btn btn-danger">Cancel item</button>
+                    <Link className="btn btn-danger" to="/cart">Cancel item</Link>
                     <button type="button" className="btn btn-primary">Add item</button>
                 </div>
             </div>

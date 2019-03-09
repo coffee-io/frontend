@@ -28,7 +28,7 @@ export default class Selector extends Component {
             if (!btn.dropdown) {
                 return <button onClick={() => this.props.onSelected(btn.value)} type="button" className="btn btn-primary" style={myStyle} key={btn.name}>{btn.name}</button>;
             } else {
-                const items = btn.dropdown.map(d => <a className="dropdown-item" style={myStyle} href="#!">{d.name}</a>);
+                const items = btn.dropdown.map(d => <a className="dropdown-item" style={myStyle} href="#!" key={d.value}>{d.name}</a>);
                 return (
                     <div className="btn-group" role="group" key={btn.name}>
                         <button type="button" className="btn btn-primary dropdown-toggle" style={myStyle} data-toggle="dropdown">{btn.name}</button>
