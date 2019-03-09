@@ -35,6 +35,7 @@ class Custom extends Component {
     //
 
     addIngredient = (ingredient) => {
+        // TODO - can we add it?
         this.setState({
             ingredients: [...this.state.ingredients, ingredient],
             totalCost: this.state.totalCost + ingredient.cost
@@ -80,7 +81,7 @@ class Custom extends Component {
                 value:      i, 
                 color:      i.color, 
                 lightColor: i.lightColor,
-                dropdown:   i.unit ? [1, 2, 3, 4].map(j => ({ name: j + " " + i.unit, value: j })) : null
+                dropdown:   i.unit ? [1, 2, 3, 4].map(j => ({ name: j + " " + i.unit, value: Object.assign(i, { qtd: j }) })) : null
             }));
             return <Selector name={key} buttons={ingredients} onSelected={(i) => this.addIngredient(i)} key={key} />;
         });
