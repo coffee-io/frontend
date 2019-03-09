@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { addItem, updateIngredients } from '../state/actions';
+import Selector from './Selector';
 
 const mapStateToProps = state => {
     return { ingredients: state.ingredients };
@@ -38,8 +39,7 @@ class Custom extends Component {
     // LOGIC
     //
 
-    addIngredient = (ingredient_name) => {
-        const ingredient = this.props.ingredients.filter(i => i.name === ingredient_name)[0];
+    addIngredient = (ingredient) => {
         this.setState({
             ingredients: [...this.state.ingredients, ingredient],
             totalCost: this.state.totalCost + ingredient.cost
@@ -70,80 +70,38 @@ class Custom extends Component {
         return types;
     }
 
-    ingredientButton(name, color, lightColor, unit) {
-        const myStyle = {
-            color: lightColor ? "black" : "white",
-            backgroundColor: color,
-            borderColor: "black",
-        }
-        if (!unit) {
-            return <button onClick={() => this.addIngredient(name)} type="button" className="btn btn-primary" style={myStyle} key={name}>{name}</button>;
-        } else {
-            return (
-                <div className="btn-group" role="group" key={name}>
-                    <button type="button" className="btn btn-primary dropdown-toggle" style={myStyle} data-toggle="dropdown">
-                        {name}
-                    </button>
-                    <div className="dropdown-menu" style={myStyle} aria-labelledby="btnGroupDrop1">
-                        <a className="dropdown-item" style={myStyle} href="#!">1 {unit}</a>
-                        <a className="dropdown-item" style={myStyle} href="#!">2 {unit}</a>
-                        <a className="dropdown-item" style={myStyle} href="#!">3 {unit}</a>
-                        <a className="dropdown-item" style={myStyle} href="#!">4 {unit}</a>
-                    </div>
-                </div>
-            );
-        }
+    ingredientList(key) {
+        let keys = this.keys();
+        return this.props.ingredients.filter(i => i.type === key);
     }
 
-    ingredientButtons() {
-        let keys = this.keys();
-        let ings = {};
-        for (let key of keys) {
-            ings[key] = [];
-            for (let ing of this.props.ingredients) {
-                if (ing.type === key)
-                    ings[key].push(this.ingredientButton(ing.name, ing.color, ing.lightColor, ing.unit));
-            }
-        }
-
-        let buttonList = [];
-        for (let key of keys) {
-            buttonList.push(
-                <div className="btn-toolbar mb-3" key={key}>
-                    <div className="btn-group" role="group" aria-label={key}>
-                        <button type="button" className="btn btn-outline-dark" style={labelStyle} disabled>{key}</button>
-                        {ings[key]}
-                    </div>
-                </div>
-            );
-        }
-
-        return buttonList;
+    sizeSelector() {
+        return [
+            { name: "Small", value: "small" },
+            { name: "Medium", value: "medium" },
+            { name: "Large", value: "large" },
+        ];
     }
 
     render() {
-        const optionStyle = { borderColor: "black" };
+        const ingSelectors = this.keys().map(key => {
+            const ingredients = this.ingredientList(key).map(i => ({
+                name:       i.name, 
+                value:      i, 
+                color:      i.color, 
+                lightColor: i.lightColor,
+                dropdown:   i.unit ? [1, 2, 3, 4].map(j => ({ name: j + " " + i.unit, value: j })) : null
+            }));
+            return <Selector name={key} buttons={ingredients} onSelected={(i) => this.addIngredient(i)} key={key} />;
+        });
         return (
             <div className="m-3">
                 <div className="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
                     <p className="lead">Craft your perfect cup of coffee. Click on the buttons below to add the ingredients.</p>
                 </div>
-                <div className="btn-toolbar mb-3" key="Size">
-                    <div className="btn-group btn-group-toggle" data-toggle="buttons">
-                        <button type="button" className="btn btn-outline-dark" style={labelStyle} disabled>Cup size</button>
-                        <label className="btn btn-outline-secondary" style={optionStyle} onClick={() => this.sizeChanged("small")}>
-                            <input type="radio" name="options" id="small" autoComplete="off" />Small
-                        </label>
-                        <label className="btn btn-outline-secondary active" style={optionStyle} onClick={() => this.sizeChanged("medium")}>
-                            <input type="radio" name="options" id="medium" autoComplete="off" defaultChecked />Medium
-                        </label>
-                        <label className="btn btn-outline-secondary" style={optionStyle} onClick={() => this.sizeChanged("large")}>
-                            <input type="radio" name="options" id="large" autoComplete="off" />Large
-                        </label>
-                    </div>
-                </div>
+                <Selector selector name="Cup size" buttons={this.sizeSelector()} onSelected={(size) => this.sizeChanged(size)} selected={2} />
                 <hr />
-                {this.ingredientButtons()}
+                {ingSelectors}
                 <hr />
                 <div className="btn-group mb-2">
                     <button type="button" className="btn btn-danger">Cancel item</button>
