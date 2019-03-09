@@ -25,6 +25,7 @@ export default class Selector extends Component {
     renderButtons() {
         const buttons = this.props.buttons.map(btn => {
             const myStyle = {
+                // width: "150px",
                 color: btn.lightColor ? "black" : "white",
                 backgroundColor: btn.color,
                 borderColor: "black",
