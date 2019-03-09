@@ -17,13 +17,14 @@
 - Create reset function (backend) - ok
 - Create ingredients microservice (backend) - ok
 - Create recipe microservice (backend) - ok
-- Create main cart (frontend)
-  - Main cart + add button
-  - Add coffee (premade)
+- Create main cart (frontend) - ok
+  - Main cart + add button - ok
+  - Add coffee (premade) - ok
   - Customize
   - Add address / payments details
     - Save in local storage
   - E-mail user when finished
+  - Deal with errors
 - Login
   - Cognito
   - Save recipes
