@@ -35,10 +35,61 @@ class Custom extends Component {
     // LOGIC
     //
 
-    addIngredient = (ingredient) => {
-        // TODO - can we add it?
+    resetCup() {
         this.setState({
-            ingredients: [...this.state.ingredients, ingredient],
+            ingredients: [],
+            totalCost: 0.0
+        });
+    }
+
+    adjustQuantities = (ingredients) => {
+        const count = ingredients.filter(i => !i.unit).length;
+        switch (count) {
+            case 0:
+                return true;
+            case 1:
+                for (let i of ingredients)
+                    if (!i.unit)
+                        i.qtd = 4;
+                return true;
+            case 2:
+                for (let i of ingredients)
+                    if (!i.unit)
+                        i.qtd = 2;
+                return true;
+            case 3:
+                let f = false;
+                for (let i of ingredients) {
+                    if (!i.unit) {
+                        if (!f) {
+                            i.qtd = 2;
+                            f = true;
+                        } else {
+                            i.qtd = 1;
+                        }
+                    }
+                }
+                return true;
+            case 4:
+                for (let i of ingredients)
+                    if (!i.unit)
+                        i.qtd = 1;
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    addIngredient = (ingredient) => {
+        let ingredients = [...this.state.ingredients, ingredient];
+        if (!this.adjustQuantities(ingredients)) {
+            console.log("Ingredient not added");
+            console.log(ingredient);
+            return;
+        }
+
+        this.setState({
+            ingredients: ingredients,
             totalCost: this.state.totalCost + ingredient.cost
         });
         console.log("Ingredient added.");
@@ -96,7 +147,8 @@ class Custom extends Component {
                     <hr />
                     <div className="row">
                         <div className="col-md-auto">
-                            <Coffee cup={this.state} />
+                            <div className="row"><Coffee cup={this.state} width={300} height={200}/></div>
+                            <div className="row"><button type="button" className="btn btn-danger" onClick={() => this.resetCup()}>Reset cup</button></div>
                         </div>
                         <div className="col">
                             <p>Click to add the ingredients:</p>
