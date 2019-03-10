@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom'
 import NavBar from './general/NavBar';
 import BottomMessage from './general/BottomMessage';
+import { BrowserRouter } from 'react-router-dom';
+
 import Home from './Home';
 import Cart from './cart/Cart';
 import NewItem from './cart/NewItem';
 import Custom from './cart/Custom';
+import Checkout from './cart/Checkout';
 import Admin from './admin/Admin';
 import Architecture from './architecture/Architecture';
-import { BrowserRouter } from 'react-router-dom';
 
 class App extends Component {
 
@@ -22,6 +24,7 @@ class App extends Component {
                         <Route exact path='/cart' component={Cart}/>
                         <Route exact path='/cart/newitem' component={NewItem}/>
                         <Route exact path='/cart/custom' component={Custom}/>
+                        <Route exact path='/cart/checkout' component={Checkout}/>
                         <Route exact path='/admin' component={Admin}/>
                         <Route exact path='/architecture' component={Architecture}/>
                     </Switch>

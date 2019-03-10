@@ -21,7 +21,7 @@
   - Main cart + add button - ok
   - Add coffee (premade) - ok
   - Customize - ok
-  - Add graphics to list, separate list
+  - Add graphics to list, separate list - ok
   - Add address / payments details
     - Save in local storage
   - E-mail user when finished

@@ -11,7 +11,7 @@ export default function Coffee(props) {
 
     function cupBackground(props) {
         return <path 
-            d="M 10 5 L 30 120 L 80 120 L 100 5 L 120 5 L 120 130 L 0 130 L 0 5 Z" 
+            d="M 10 5 L 30 120 L 80 120 L 100 5 L 110 5 L 110 130 L 5 130 L 5 5 Z" 
             stroke="none"
             fill="white"
         />;
@@ -19,7 +19,7 @@ export default function Coffee(props) {
 
     function ingredient(color, level, size, key) {
         return <rect
-            x={0} y={10 + (level - 1) * (110 / 4)} width={110} height={size * (110/4)}
+            x={6} y={10 + (level - 1) * (110 / 4)} width={100} height={size * (110/4)}
             stroke="black" strokeWidth={0.5}
             fill={color}
             key={key}
@@ -51,12 +51,13 @@ export default function Coffee(props) {
         sz = 0.6;
     else if (props.cup.size === "large")
         sz = 1.0;
+    const viewBox = props.simple ? "0 0 130 130" : "0 0 250 130";
     return (
-        <svg width={props.width * sz} height={props.height * sz} viewBox="0 0 250 130">
+        <svg width={props.width * sz} height={props.height * sz} viewBox={viewBox}>
             {ingredients(props)}
             {cupBackground(props)}
             {cup(props)}
-            {names(props)}
+            {props.simple ? <div></div> : names(props)}
         </svg>
     );
 }
