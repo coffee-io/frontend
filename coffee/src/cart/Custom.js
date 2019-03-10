@@ -80,6 +80,14 @@ class Custom extends Component {
         }
     }
 
+    calculateCost(ingredients) {
+        let cost = 0.0;
+        for (const i of ingredients)
+            cost += (i.cost / 4.0 * i.qtd);
+        cost = Math.floor(cost * 2) / 2;   // round values
+        return cost;
+    }
+
     addIngredient = (ingredient) => {
         let ingredients = [...this.state.ingredients, ingredient];
         if (!this.adjustQuantities(ingredients)) {
@@ -88,9 +96,11 @@ class Custom extends Component {
             return;
         }
 
+        const totalCost = this.calculateCost(ingredients);
+
         this.setState({
             ingredients: ingredients,
-            totalCost: this.state.totalCost + ingredient.cost
+            totalCost: totalCost,
         });
         console.log("Ingredient added.");
         console.log(ingredient);
@@ -108,13 +118,11 @@ class Custom extends Component {
         // organize order of keys
         let s = new Set();
         for (let ing of this.props.ingredients)
-            if (ing.type !== "Coffee" && ing.type !== "Additional" && ing.type !== "Diet")
+            if (ing.type !== "Coffee")
                 s.add(ing.type);
         let types = Array.from(s);
         types.sort();
         types.unshift("Coffee");
-        types.push("Additional");
-        types.push("Diet");
         return types;
     }
 
@@ -146,19 +154,19 @@ class Custom extends Component {
                     <Selector selector name="Cup size" buttons={this.sizeSelector()} onSelected={(size) => this.sizeChanged(size)} selected={2} />
                     <hr />
                     <div className="row">
-                        <div className="col-md-auto">
-                            <div className="row"><Coffee cup={this.state} width={300} height={200}/></div>
-                            <div className="row"><button type="button" className="btn btn-danger" onClick={() => this.resetCup()}>Reset cup</button></div>
-                        </div>
                         <div className="col">
                             <p>Click to add the ingredients:</p>
                             {ingSelectors}
+                        </div>
+                        <div className="col my-auto ml-4">
+                            <div className="row mx-auto"><Coffee cup={this.state} width={300} height={200}/></div>
+                            <div className="row ml-3"><button type="button" className="btn btn-danger" onClick={() => this.resetCup()}>Reset</button></div>
                         </div>
                     </div>
                     <hr />
                     <div className="btn-group mb-2">
                         <Link className="btn btn-danger" to="/cart">Cancel item</Link>
-                        <button type="button" className="btn btn-primary">Add item</button>
+                        <button type="button" className="btn btn-primary">Add item: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', }).format(this.state.totalCost)}</button>
                     </div>
                 </div>
             </div>
