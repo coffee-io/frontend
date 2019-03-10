@@ -34,6 +34,12 @@ export function rootReducer(state = initialState, action) {
         return Object.assign({}, state, { recipes: action.data });
     } else if (action.type === Action.INGREDIENTS_UPDATED) {
         return Object.assign({}, state, { ingredients: action.data });
+    } else if (action.type === Action.CHANGE_ADDRESS) {
+        const cart = Object.assign({}, state.cart);
+        cart.deliveryAddress = action.address;
+        state = Object.assign({}, state, { cart });
     }
     return state;
 }
+
+// vim:st=4:sts=4:sw=4:expandtab

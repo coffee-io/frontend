@@ -5,6 +5,8 @@ const Action = {
     REMOVE_ITEM         : 2,
     RECIPES_UPDATED     : 3,
     INGREDIENTS_UPDATED : 4,
+    CHANGE_ADDRESS      : 5,
+    SUBMIT_CART         : 6,
 }
 
 export function addItem(item) {
@@ -45,6 +47,10 @@ export function updateIngredients() {
             })
             .catch(error => { throw(error); });
     }
+}
+
+export function changeAddress(address) {
+    return { type: Action.CHANGE_ADDRESS, address };
 }
 
 export default Action;
