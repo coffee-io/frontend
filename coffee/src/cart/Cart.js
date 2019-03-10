@@ -30,7 +30,7 @@ class Cart extends Component {
             rows.push(
                 <tr key={'item_' + i}>
                     <th scope="row" className="text-right">{i+1}</th>
-                    <td>{item.recipeName}</td>
+                    <td>{item.recipeName ? item.recipeName : item.description}</td>
                     <td className="text-right">${item.totalCost.toFixed(2)}</td>
                     <td className="text-center">
                         <button type="button" className="btn btn-danger btn-sm" onClick={func}>

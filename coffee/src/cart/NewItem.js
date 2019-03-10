@@ -59,7 +59,7 @@ class NewItem extends Component {
                 <div className="container">
                     <div className="card-deck mb-3 text-center">
                         {this.box("Customize", null, "Craft the perfect cup of coffee, just the way you like it.", 
-                            () => { /* TODO */ }, "Create from Scratch", true, "/cart/custom")}
+                            () => {}, "Create from Scratch", true, "/cart/custom")}
                         {boxes}
                     </div>
                 </div>

@@ -22,6 +22,7 @@ class Custom extends Component {
         super(props);
         this.state = {
             size: "medium",
+            description: "Empty cup",
             ingredients: [],
             totalCost: 0.00,
         }
@@ -88,6 +89,10 @@ class Custom extends Component {
         return cost;
     }
 
+    createDescription(ingredients) {
+        return ingredients.map(i => i.name).sort().join(", ");
+    }
+
     addIngredient = (ingredient) => {
         let ingredients = [...this.state.ingredients, ingredient];
         if (!this.adjustQuantities(ingredients)) {
@@ -96,11 +101,10 @@ class Custom extends Component {
             return;
         }
 
-        const totalCost = this.calculateCost(ingredients);
-
         this.setState({
             ingredients: ingredients,
-            totalCost: totalCost,
+            totalCost: this.calculateCost(ingredients),
+            description: this.createDescription(ingredients),
         });
         console.log("Ingredient added.");
         console.log(ingredient);
@@ -108,6 +112,15 @@ class Custom extends Component {
 
     sizeChanged = (s) => {
         this.setState({ size: s });
+    }
+
+    addItem = (e) => {
+        if (this.state.ingredients.length > 0) {
+            this.props.addItem(this.state);
+        } else {
+            alert("Choose at least one ingredient.");
+            e.preventDefault();
+        }
     }
 
     // 
@@ -166,7 +179,11 @@ class Custom extends Component {
                     <hr />
                     <div className="btn-group mb-2">
                         <Link className="btn btn-danger" to="/cart">Cancel item</Link>
-                        <button type="button" className="btn btn-primary">Add item: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', }).format(this.state.totalCost)}</button>
+                        <Link
+                            className="btn btn-primary"
+                            onClick={e => this.addItem(e)}
+                            to="/cart"
+                        >Add item: {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', }).format(this.state.totalCost)}</Link>
                     </div>
                 </div>
             </div>

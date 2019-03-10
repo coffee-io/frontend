@@ -20,7 +20,8 @@
 - Create main cart (frontend) - ok
   - Main cart + add button - ok
   - Add coffee (premade) - ok
-  - Customize
+  - Customize - ok
+  - Add graphics to list, separate list
   - Add address / payments details
     - Save in local storage
   - E-mail user when finished
