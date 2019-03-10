@@ -9,10 +9,13 @@ const mapStateToProps = state => {
 
 class Checkout extends Component {
     finalizePurchase = (e) => {
-        // TODO - submit address
+        // TODO - save address
+        // TODO - submit cart
         // TODO - redirect
         //e.preventDefault();
     }
+
+    // TODO - addresses already used
 
     render() {
         /*
@@ -44,12 +47,12 @@ class Checkout extends Component {
                           <input type="text" className="form-control" id="validationDefault01" placeholder="Mark" required />
                         </div>
                         <div class="col-md-6 mb-3">
-                          <label for="validationDefaultUsername">E-mail</label>
+                          <label for="validationDefaultEmail">E-mail</label>
                           <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="inputGroupPrepend2">@</span>
                             </div>
-                            <input type="text" class="form-control" id="validationDefaultUsername" placeholder="you@example.com" required />
+                            <input type="text" class="form-control" id="validationDefaultEmail" placeholder="you@example.com" required />
                           </div>
                         </div>
                       </div>
