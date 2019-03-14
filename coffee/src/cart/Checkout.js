@@ -63,10 +63,8 @@ class Checkout extends Component {
         if (this.state.submitted)
             return <Redirect to='/cart/finalized' />;
 
-        /*
         if (this.props.cart.items.length === 0)
             return <Redirect to='/cart' />;
-        */
 
         return (
             <div className="container">
@@ -74,12 +72,10 @@ class Checkout extends Component {
                     <p className="lead">Please fill out the details below in order to check out.</p>
                 </div>
                 <div className="row">
-                    <div className="col-md-4 order-md-2 mb-4">
-                        <h4 className="d-flex justify-content-between align-items-center mb-3">
-                            <span className="text-muted">Your cart</span>
-                        </h4>
-                        <OrderList cart={this.props.cart} />
-                    </div>
+                    <h4 className="d-flex justify-content-between align-items-center mb-3">
+                        <span className="text-muted">Your cart</span>
+                    </h4>
+                    <OrderList cart={this.props.cart} />
                 </div>
 
                 <div className="col-md-8 order-md-1">
