@@ -6,7 +6,7 @@ const Action = {
     RECIPES_UPDATED     : 3,
     INGREDIENTS_UPDATED : 4,
     CHANGE_ADDRESS      : 5,
-    SUBMIT_CART         : 6,
+    CART_SUBMITTED      : 6,
 }
 
 export function addItem(item) {
@@ -51,6 +51,20 @@ export function updateIngredients() {
 
 export function changeAddress(address) {
     return { type: Action.CHANGE_ADDRESS, address };
+}
+
+export function submitCart(cart) {
+    function cartSubmitted() {
+        return { type: Action.CART_SUBMITTED };
+    }
+
+    return (dispatch) => {
+        return axios.post(process.env.REACT_APP_BACKEND_URL + "/cart", cart)
+            .then(res => {
+                dispatch(cartSubmitted());
+            })
+            .catch(error => { throw(error); });
+    }
 }
 
 export default Action;

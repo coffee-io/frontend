@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import OrderList from './OrderList';
-import { changeAddress } from '../state/actions';
+import { changeAddress, submitCart } from '../state/actions';
 
 const mapStateToProps = state => {
     return { cart: state.cart };
@@ -11,6 +11,7 @@ const mapStateToProps = state => {
 function mapDispatchToProps(dispatch) {
     return {
         changeAddress: address => dispatch(changeAddress(address)),
+        submitCart: cart => dispatch(submitCart(cart)),
     };
 }
 
@@ -41,11 +42,12 @@ class Checkout extends Component {
             zip: this.state.zip
         });
 
-        // TODO - save address
-        // TODO - submit cart
+        // submit cart
+        this.props.submitCart(this.props.cart);
+
         // TODO - redirect
+
         e.preventDefault();
-        console.log("xxx");
     }
 
     // TODO - addresses already used

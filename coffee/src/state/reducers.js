@@ -38,13 +38,15 @@ export function rootReducer(state = initialState, action) {
         const cart = Object.assign({}, state.cart);
         cart.deliveryAddress = action.address;
         state = Object.assign({}, state, { cart });
-        // TODO - save address
-        let current = window.localStorage.getItem('addresses');
+        // save address
+        let current = JSON.parse(window.localStorage.getItem('addresses'));
         if (current === null)
             current = [];
         current.push(action.address);
         window.localStorage.setItem('addresses', JSON.stringify(current));
         console.log('Address updated on localStorage.');
+    } else if (action.type === Action.CART_SUBMITTED) {
+        state = Object.assign({}, state, { cart: {} });
     }
     return state;
 }
