@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import OrderList from './OrderList';
-import { changeAddress, submitCart } from '../state/actions';
+import { submitCart } from '../state/actions';
 
 const mapStateToProps = state => {
     return { cart: state.cart };
@@ -10,8 +10,7 @@ const mapStateToProps = state => {
 
 function mapDispatchToProps(dispatch) {
     return {
-        changeAddress: address => dispatch(changeAddress(address)),
-        submitCart: cart => dispatch(submitCart(cart)),
+        submitCart: (cart, address) => dispatch(submitCart(cart, address)),
     };
 }
 
@@ -28,12 +27,24 @@ class Checkout extends Component {
             zip: "",
             saveForm: true,
             submitted: false,
+            submitButton: {
+                text: "Complete purchase",
+                disabled: false,
+            }
         };
     }
 
     finalizePurchase = (e) => {
-        // change address
-        this.props.changeAddress({
+        this.setState({
+            submitButton: {
+                text: "Submitting purchase...",
+                disabled: true,
+            },
+            submitted: true,
+        });
+
+        // submit cart
+        this.props.submitCart(this.props.cart, {
             name: this.state.name,
             email: this.state.email,
             address: this.state.address,
@@ -41,9 +52,6 @@ class Checkout extends Component {
             state: this.state.state,
             zip: this.state.zip
         });
-
-        // submit cart
-        this.props.submitCart(this.props.cart);
 
         // TODO - redirect
 
@@ -62,11 +70,12 @@ class Checkout extends Component {
     }
 
     render() {
-        if (this.state.submitted)
-            return <Redirect to='/cart/finalized' />;
-
-        if (this.props.cart.items.length === 0)
-            return <Redirect to='/cart' />;
+        if (this.props.cart.items.length === 0) {
+            if (this.state.submitted)
+                return <Redirect to='/cart/finalized' />;
+            else
+                return <Redirect to='/cart' />;
+        }
 
         return (
             <div className="container">
@@ -173,21 +182,7 @@ class Checkout extends Component {
                           />
                         </div>
                       </div>
-                      <div className="form-group">
-                        <div className="form-check">
-                            <input
-                                className="form-check-input"
-                                checked={this.state.saveForm}
-                                onChange={this.handleInputChange}
-                                name="saveForm" 
-                                type="checkbox"
-                            />
-                          <label className="form-check-label">
-                            Save this address for future purchases
-                          </label>
-                        </div>
-                      </div>
-                      <button className="btn btn-primary mb-5" type="submit">Submit form</button>
+                      <button className="btn btn-primary mb-5" type="submit" disabled={this.state.submitButton.disabled}>{this.state.submitButton.text}</button>
                     </form>
                 </div>
             </div>

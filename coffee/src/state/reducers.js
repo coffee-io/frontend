@@ -6,7 +6,6 @@ const initialState = {
         deliveryCost: 0.0,
         taxCost: 0.0,
         total: 0.0,
-        deliveryAddress: {},
     },
     recipes: [],
     ingredients: [],
@@ -34,19 +33,8 @@ export function rootReducer(state = initialState, action) {
         return Object.assign({}, state, { recipes: action.data });
     } else if (action.type === Action.INGREDIENTS_UPDATED) {
         return Object.assign({}, state, { ingredients: action.data });
-    } else if (action.type === Action.CHANGE_ADDRESS) {
-        const cart = Object.assign({}, state.cart);
-        cart.deliveryAddress = action.address;
-        state = Object.assign({}, state, { cart });
-        // save address
-        let current = JSON.parse(window.localStorage.getItem('addresses'));
-        if (current === null)
-            current = [];
-        current.push(action.address);
-        window.localStorage.setItem('addresses', JSON.stringify(current));
-        console.log('Address updated on localStorage.');
     } else if (action.type === Action.CART_SUBMITTED) {
-        state = Object.assign({}, state, { cart: {} });
+        state = Object.assign({}, state, { cart: initialState.cart });
     }
     return state;
 }

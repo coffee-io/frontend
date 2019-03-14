@@ -22,15 +22,14 @@
   - Add coffee (premade) - ok
   - Customize - ok
   - Add graphics to list, separate list - ok
-  - Add address / payments details
-    - Save in local storage
-  - E-mail user when finished
+  - Add address / payments details - ok
+  - E-mail user when finished - ok
+  - Reset lambda - remove and recreate tables / remove from terraform - ok
   - Deal with errors
-  - Reset lambda - remove and recreate tables / remove from terraform
+- Admin
+- Architecture
 - Login
   - Cognito
   - Save recipes
   - Save address
-- Architecture
-- Admin
 - Delivery
