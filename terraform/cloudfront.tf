@@ -9,7 +9,8 @@ data "aws_acm_certificate" "cert" {
 
 resource "aws_cloudfront_distribution" "frontend_cf" {
     origin {
-        domain_name         = "coffee-prod.s3.amazonaws.com"
+        #domain_name         = "coffee-prod.s3.amazonaws.com"
+        domain_name         = "coffee-prod.s3-website-us-east-1.amazonaws.com"
         origin_id           = "coffee-prod-s3"
     }
 
