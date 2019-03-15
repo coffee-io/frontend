@@ -136,7 +136,7 @@ class Checkout extends Component {
                               onChange={this.handleInputChange}
                               className="form-control"
                               id="validationDefault02"
-                              placeholder="1234 Main St"
+                              placeholder="(don't put your real address here!)"
                               required
                           />
                         </div>

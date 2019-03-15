@@ -22,7 +22,7 @@ export default class NavBar extends Component {
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav">
                         <NavLink className="nav-item nav-link" activeClassName="active" to="/cart">Shopping Cart</NavLink>
-                        <NavLink className="nav-item nav-link" activeClassName="active" to="/admin">Admin</NavLink>
+                        <NavLink className="nav-item nav-link" activeClassName="active" to="/admin">Pending deliveries</NavLink>
                         <NavLink className="nav-item nav-link" activeClassName="active" to="/architecture">Application architecture</NavLink>
                     </div>
                 </div>
