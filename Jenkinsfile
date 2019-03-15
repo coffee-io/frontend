@@ -46,7 +46,7 @@ pipeline {
                     mkdir -p /tmp/upload_s3
                     unzip /artifacts/tmp/coffee.zip -d /tmp/upload_s3
                     aws s3 sync /tmp/upload_s3/ s3://coffee-prod/ --acl public-read
-                    /tmp/bin/update_source_cksum frontend coffee/src/
+                    #/tmp/bin/update_source_cksum frontend coffee/src/
                 """
             }
         }
