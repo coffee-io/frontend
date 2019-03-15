@@ -72,6 +72,7 @@ class Admin extends Component {
                 <div className="py-5 text-center">
                     <p className="lead">List of pending orders.</p>
                     {this.renderData()}
+                    <i>(since this is a demonstration website, all orders are deleted at midnight)</i>
                 </div>
             </div>
         );
