@@ -98,7 +98,7 @@ export default function Architecture(props) {
                 <p>Steps involved in building the application are:</p>
                 <ul>
                     <li><b>backend</b>: provision the infrastructure on AWS and upload the lambdas;</li>
-                    <li><b>frontend</b>: provision the infrastructure, creates a <a href="https://www.docker.com/">Docker</a> container that compiles the React application, and uploads the application to S3.</li>
+                    <li><b>frontend</b>: provision the infrastructure, creates a <a href="https://www.docker.com/">Docker</a> container that compiles and test the React application, and then uploads it to S3.</li>
                 </ul>
                 <p>
                     The Jenkins server used for building Mycoffee is publically available at <a href="http://jenkins.coffee.gamesmith.co.uk/">http://jenkins.coffee.gamesmith.co.uk/</a>.
