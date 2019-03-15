@@ -12,6 +12,12 @@ resource "aws_cloudfront_distribution" "frontend_cf" {
         #domain_name         = "coffee-prod.s3.amazonaws.com"
         domain_name         = "coffee-prod.s3-website-us-east-1.amazonaws.com"
         origin_id           = "coffee-prod-s3"
+        custom_origin_config {
+            origin_protocol_policy = "http-only"
+            http_port              = "80"
+            https_port             = "443"
+            origin_ssl_protocols   = ["TLSv1.2"]
+        }
     }
 
     enabled                 = true
